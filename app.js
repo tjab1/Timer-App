@@ -31,7 +31,8 @@ class IntervalTimer {
 
         // Constants
         this.REST_BETWEEN_SETS = 1.5; // seconds
-        this.REST_BETWEEN_ROUNDS = 8; // seconds
+        this.TRANSITION_BETWEEN_PHASES = 1.5; // seconds
+        this.TRANSITION_BETWEEN_ROUNDS = 3; // seconds
 
         // Initialize
         this.init();
@@ -159,12 +160,13 @@ class IntervalTimer {
         }
     }
 
-    setStatus(text, isResting = false) {
+    setStatus(text, mode = 'normal') {
         this.statusDisplay.textContent = text;
-        if (isResting) {
+        this.fillOverlay.classList.remove('resting', 'transition');
+        if (mode === 'resting') {
             this.fillOverlay.classList.add('resting');
-        } else {
-            this.fillOverlay.classList.remove('resting');
+        } else if (mode === 'transition') {
+            this.fillOverlay.classList.add('transition');
         }
     }
 
@@ -231,7 +233,7 @@ class IntervalTimer {
     }
 
     runSet(duration) {
-        this.setStatus('Hold', false);
+        this.setStatus('Hold');
         this.totalPhaseTime = duration;
         this.remainingTime = duration;
         this.updateTimeDisplay(duration);
@@ -241,7 +243,7 @@ class IntervalTimer {
     }
 
     runRest(duration, callback) {
-        this.setStatus('Rest', true);
+        this.setStatus('Rest', 'resting');
         this.totalPhaseTime = duration;
         this.remainingTime = duration;
         this.updateTimeDisplay(duration);
@@ -258,6 +260,31 @@ class IntervalTimer {
             this.updateTimeDisplay(this.remainingTime);
             // Drain from full to empty (1 → 0)
             this.updateFillAngle(this.remainingTime / this.totalPhaseTime);
+
+            if (this.remainingTime <= 0) {
+                clearInterval(this.timerInterval);
+                callback();
+            }
+        }, 50);
+    }
+
+    runTransition(duration, message, callback) {
+        this.setStatus(message, 'transition');
+        this.phaseInfo.textContent = '';
+        this.totalPhaseTime = duration;
+        this.remainingTime = duration;
+        this.updateTimeDisplay(duration);
+        this.updateFillAngle(0); // Blank circle
+
+        const startTime = Date.now();
+
+        this.timerInterval = setInterval(() => {
+            if (this.isPaused) return;
+
+            const elapsed = (Date.now() - startTime) / 1000;
+            this.remainingTime = Math.max(0, this.totalPhaseTime - elapsed);
+
+            this.updateTimeDisplay(this.remainingTime);
 
             if (this.remainingTime <= 0) {
                 clearInterval(this.timerInterval);
@@ -288,14 +315,18 @@ class IntervalTimer {
                     return;
                 }
 
-                // Rest between rounds
+                // Rest then transition between rounds
                 this.phaseInfo.textContent = 'Round Complete!';
-                this.runRest(this.REST_BETWEEN_ROUNDS, () => this.runPhase());
+                this.runRest(this.REST_BETWEEN_SETS, () => {
+                    this.runTransition(this.TRANSITION_BETWEEN_ROUNDS, 'Reverse', () => this.runPhase());
+                });
                 return;
             }
 
-            // Rest between phases (using same rest as between sets)
-            this.runRest(this.REST_BETWEEN_SETS, () => this.runPhase());
+            // Rest then transition between phases
+            this.runRest(this.REST_BETWEEN_SETS, () => {
+                this.runTransition(this.TRANSITION_BETWEEN_PHASES, 'Next Phase', () => this.runPhase());
+            });
             return;
         }
 
@@ -311,7 +342,7 @@ class IntervalTimer {
         this.isRunning = false;
         this.isPaused = false;
         this.startBtn.textContent = 'Start';
-        this.setStatus('Complete!', false);
+        this.setStatus('Complete!');
         this.updateFillAngle(0);
 
         // Save exercise completion time
@@ -351,7 +382,7 @@ class IntervalTimer {
         this.currentPhase = 0;
         this.currentSet = 0;
         this.startBtn.textContent = 'Start';
-        this.setStatus('Ready', false);
+        this.setStatus('Ready');
         this.updateTimeDisplay(0);
         this.updateFillAngle(0);
         this.setLevelSelectEnabled(true);

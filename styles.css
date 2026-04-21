@@ -157,6 +157,11 @@ body {
     );
 }
 
+/* For transitions between phases - blank */
+.fill-overlay.transition {
+    background: transparent;
+}
+
 /* Stopwatch Center */
 .stopwatch-center {
     position: absolute;
