@@ -1,8 +1,54 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <!-- Background split -->
   <rect width="192" height="192" fill="#1a1a2e" rx="32"/>
-  <circle cx="96" cy="104" r="60" fill="#f8f9fa"/>
-  <path d="M96 104 L96 64" stroke="#e63946" stroke-width="8" stroke-linecap="round"/>
-  <path d="M96 104 L126 104" stroke="#1a1a2e" stroke-width="6" stroke-linecap="round"/>
-  <circle cx="96" cy="104" r="8" fill="#1a1a2e"/>
-  <rect x="88" y="32" width="16" height="12" rx="2" fill="#64ffda"/>
+  <rect x="0" y="0" width="96" height="192" fill="#e63946" rx="32" clip-path="url(#leftClip)"/>
+
+  <defs>
+    <clipPath id="leftClip">
+      <rect x="0" y="0" width="96" height="192" rx="32"/>
+    </clipPath>
+  </defs>
+
+  <!-- Lion mane (extends past center) -->
+  <ellipse cx="115" cy="96" rx="75" ry="70" fill="#f8f9fa"/>
+  <ellipse cx="105" cy="96" rx="65" ry="60" fill="#f8f9fa"/>
+
+  <!-- Mane texture/spikes -->
+  <circle cx="45" cy="50" r="18" fill="#f8f9fa"/>
+  <circle cx="55" cy="35" r="16" fill="#f8f9fa"/>
+  <circle cx="75" cy="28" r="18" fill="#f8f9fa"/>
+  <circle cx="100" cy="22" r="16" fill="#f8f9fa"/>
+  <circle cx="125" cy="25" r="15" fill="#f8f9fa"/>
+  <circle cx="148" cy="35" r="14" fill="#f8f9fa"/>
+  <circle cx="165" cy="50" r="16" fill="#f8f9fa"/>
+  <circle cx="172" cy="70" r="14" fill="#f8f9fa"/>
+  <circle cx="175" cy="96" r="13" fill="#f8f9fa"/>
+  <circle cx="172" cy="122" r="14" fill="#f8f9fa"/>
+  <circle cx="165" cy="142" r="16" fill="#f8f9fa"/>
+  <circle cx="148" cy="157" r="14" fill="#f8f9fa"/>
+  <circle cx="125" cy="167" r="15" fill="#f8f9fa"/>
+  <circle cx="100" cy="170" r="16" fill="#f8f9fa"/>
+  <circle cx="75" cy="164" r="18" fill="#f8f9fa"/>
+  <circle cx="55" cy="157" r="16" fill="#f8f9fa"/>
+  <circle cx="45" cy="142" r="18" fill="#f8f9fa"/>
+  <circle cx="38" cy="120" r="15" fill="#f8f9fa"/>
+  <circle cx="38" cy="72" r="15" fill="#f8f9fa"/>
+
+  <!-- Lion face (right half visible) -->
+  <ellipse cx="130" cy="96" rx="45" ry="50" fill="#f8f9fa"/>
+
+  <!-- Eye -->
+  <ellipse cx="145" cy="85" rx="8" ry="9" fill="#1a1a2e"/>
+  <circle cx="147" cy="83" r="2" fill="#ffffff"/>
+
+  <!-- Nose -->
+  <ellipse cx="168" cy="100" rx="10" ry="8" fill="#e6a88a"/>
+  <ellipse cx="168" cy="98" rx="6" ry="4" fill="#1a1a2e"/>
+
+  <!-- Mouth line -->
+  <path d="M168 108 Q168 118 160 120" stroke="#1a1a2e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Ear -->
+  <ellipse cx="140" cy="50" rx="12" ry="15" fill="#f8f9fa"/>
+  <ellipse cx="140" cy="52" rx="6" ry="8" fill="#e6a88a"/>
 </svg>
