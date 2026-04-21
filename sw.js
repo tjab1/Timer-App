@@ -1,12 +1,12 @@
-const CACHE_NAME = 'timer-app-v1';
+const CACHE_NAME = 'timer-app-v2';
 const urlsToCache = [
   '/Timer-App/',
   '/Timer-App/index.html',
   '/Timer-App/styles.css',
   '/Timer-App/app.js',
   '/Timer-App/manifest.json',
-  '/Timer-App/icons/icon-192.svg',
-  '/Timer-App/icons/icon-512.svg'
+  '/Timer-App/icons/icon-192.png',
+  '/Timer-App/icons/icon-512.png'
 ];
 
 // Install service worker and cache files
