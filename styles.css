@@ -1,0 +1,321 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+/* Screen Management */
+.screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.screen.active {
+    display: flex;
+}
+
+/* Level Display */
+.level-display {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 1.2rem;
+}
+
+.level-label {
+    color: #8892b0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+}
+
+.level-selector {
+    position: relative;
+}
+
+.level-dropdown {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: 2px solid #4a5568;
+    border-radius: 12px;
+    padding: 8px 36px 8px 16px;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #64ffda;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.level-dropdown:hover {
+    border-color: #64ffda;
+}
+
+.level-dropdown:focus {
+    outline: none;
+    border-color: #64ffda;
+    box-shadow: 0 0 15px rgba(100, 255, 218, 0.2);
+}
+
+.level-dropdown:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-color: #4a5568;
+}
+
+.level-dropdown option {
+    background: #1a1a2e;
+    color: #ffffff;
+    padding: 10px;
+}
+
+.level-selector::after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid #64ffda;
+    pointer-events: none;
+}
+
+/* Timer Container */
+.timer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Stopwatch */
+.stopwatch {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: #0f0f1a;
+    padding: 15px;
+    box-shadow:
+        0 0 60px rgba(100, 255, 218, 0.1),
+        inset 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.stopwatch-face {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #f8f9fa;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Sweeping Fill Overlay */
+.fill-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: conic-gradient(
+        #e63946 0deg,
+        #e63946 var(--fill-angle, 0deg),
+        transparent var(--fill-angle, 0deg),
+        transparent 360deg
+    );
+    transform: rotate(-90deg);
+    transition: --fill-angle 0.1s linear;
+}
+
+/* For rest periods - different color */
+.fill-overlay.resting {
+    background: conic-gradient(
+        #4ecdc4 0deg,
+        #4ecdc4 var(--fill-angle, 0deg),
+        transparent var(--fill-angle, 0deg),
+        transparent 360deg
+    );
+}
+
+/* Stopwatch Center */
+.stopwatch-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 70%;
+    border-radius: 50%;
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.time-display {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    font-variant-numeric: tabular-nums;
+}
+
+.status-display {
+    font-size: 0.9rem;
+    color: #4a5568;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 5px;
+}
+
+/* Info Panel */
+.info-panel {
+    text-align: center;
+    min-height: 60px;
+}
+
+.phase-info {
+    font-size: 1rem;
+    color: #8892b0;
+    margin-bottom: 8px;
+}
+
+.round-info {
+    font-size: 0.9rem;
+    color: #64ffda;
+    font-weight: 500;
+}
+
+/* Buttons */
+.btn {
+    padding: 16px 48px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.btn-start {
+    background: linear-gradient(135deg, #64ffda 0%, #4ecdc4 100%);
+    color: #1a1a2e;
+}
+
+.btn-start:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(100, 255, 218, 0.3);
+}
+
+.btn-start:disabled {
+    background: #4a5568;
+    color: #8892b0;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #64ffda 0%, #4ecdc4 100%);
+    color: #1a1a2e;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(100, 255, 218, 0.3);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #8892b0;
+    border: 2px solid #4a5568;
+}
+
+.btn-secondary:hover {
+    border-color: #64ffda;
+    color: #64ffda;
+}
+
+/* Completion Screen */
+.completion-content {
+    text-align: center;
+}
+
+.trophy {
+    font-size: 6rem;
+    margin-bottom: 20px;
+    animation: bounce 1s ease infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.completion-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #64ffda;
+    margin-bottom: 10px;
+}
+
+.completion-subtitle {
+    font-size: 1.2rem;
+    color: #8892b0;
+}
+
+.completion-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 250px;
+}
+
+/* CSS Custom Properties for animation */
+@property --fill-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+    .stopwatch {
+        width: 240px;
+        height: 240px;
+    }
+
+    .time-display {
+        font-size: 2rem;
+    }
+
+    .level-dropdown {
+        font-size: 2rem;
+        padding: 6px 30px 6px 12px;
+    }
+}

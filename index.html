@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interval Timer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Home Screen -->
+        <div id="home-screen" class="screen active">
+            <div class="level-display">
+                <span class="level-label">Level</span>
+                <div class="level-selector">
+                    <select id="level-select" class="level-dropdown">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="timer-container">
+                <div class="stopwatch">
+                    <div class="stopwatch-face">
+                        <div id="fill-overlay" class="fill-overlay"></div>
+                        <div class="stopwatch-center">
+                            <span id="time-display" class="time-display">0:00</span>
+                            <span id="status-display" class="status-display">Ready</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-panel">
+                <div id="phase-info" class="phase-info"></div>
+                <div id="round-info" class="round-info">Round 1 of 2</div>
+            </div>
+
+            <button id="start-btn" class="btn btn-start">Start</button>
+        </div>
+
+        <!-- Completion Screen -->
+        <div id="completion-screen" class="screen">
+            <div class="completion-content">
+                <div class="trophy">&#127942;</div>
+                <h1 class="completion-title">Good Job!</h1>
+                <p class="completion-subtitle">Level <span id="completed-level">1</span> Complete!</p>
+            </div>
+
+            <div class="completion-buttons">
+                <button id="go-again-btn" class="btn btn-primary">Go Again</button>
+                <button id="home-btn" class="btn btn-secondary">Home</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
