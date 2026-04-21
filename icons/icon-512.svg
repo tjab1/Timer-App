@@ -1,54 +1,82 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
-  <!-- Background split -->
-  <rect width="512" height="512" fill="#1a1a2e" rx="80"/>
-  <rect x="0" y="0" width="256" height="512" fill="#e63946" rx="80" clip-path="url(#leftClip512)"/>
+  <!-- Background -->
+  <rect width="512" height="512" fill="#e63946" rx="80"/>
+  <rect x="256" y="0" width="256" height="512" fill="#f8f9fa"/>
 
-  <defs>
-    <clipPath id="leftClip512">
-      <rect x="0" y="0" width="256" height="512" rx="80"/>
-    </clipPath>
-  </defs>
+  <!-- Mane spikes - sharp pointed style -->
+  <g fill="#1a1a2e">
+    <!-- Top mane spikes -->
+    <polygon points="200,120 253,40 267,133"/>
+    <polygon points="227,93 293,13 299,112"/>
+    <polygon points="267,80 341,5 333,101"/>
+    <polygon points="307,75 387,21 368,107"/>
+    <polygon points="347,85 427,48 405,128"/>
+    <polygon points="379,112 459,85 432,160"/>
 
-  <!-- Lion mane (extends past center) -->
-  <ellipse cx="305" cy="256" rx="200" ry="187" fill="#f8f9fa"/>
-  <ellipse cx="280" cy="256" rx="173" ry="160" fill="#f8f9fa"/>
+    <!-- Right side mane -->
+    <polygon points="413,147 480,120 453,200"/>
+    <polygon points="440,192 501,181 475,253"/>
+    <polygon points="453,240 512,245 480,307"/>
+    <polygon points="448,293 507,315 469,368"/>
+    <polygon points="432,347 493,387 448,421"/>
+    <polygon points="405,400 467,459 413,467"/>
 
-  <!-- Mane texture/spikes -->
-  <circle cx="120" cy="133" r="48" fill="#f8f9fa"/>
-  <circle cx="147" cy="93" r="43" fill="#f8f9fa"/>
-  <circle cx="200" cy="75" r="48" fill="#f8f9fa"/>
-  <circle cx="267" cy="59" r="43" fill="#f8f9fa"/>
-  <circle cx="333" cy="67" r="40" fill="#f8f9fa"/>
-  <circle cx="395" cy="93" r="37" fill="#f8f9fa"/>
-  <circle cx="440" cy="133" r="43" fill="#f8f9fa"/>
-  <circle cx="459" cy="187" r="37" fill="#f8f9fa"/>
-  <circle cx="467" cy="256" r="35" fill="#f8f9fa"/>
-  <circle cx="459" cy="325" r="37" fill="#f8f9fa"/>
-  <circle cx="440" cy="379" r="43" fill="#f8f9fa"/>
-  <circle cx="395" cy="419" r="37" fill="#f8f9fa"/>
-  <circle cx="333" cy="445" r="40" fill="#f8f9fa"/>
-  <circle cx="267" cy="453" r="43" fill="#f8f9fa"/>
-  <circle cx="200" cy="437" r="48" fill="#f8f9fa"/>
-  <circle cx="147" cy="419" r="43" fill="#f8f9fa"/>
-  <circle cx="120" cy="379" r="48" fill="#f8f9fa"/>
-  <circle cx="101" cy="320" r="40" fill="#f8f9fa"/>
-  <circle cx="101" cy="192" r="40" fill="#f8f9fa"/>
+    <!-- Bottom mane -->
+    <polygon points="373,440 413,507 347,475"/>
+    <polygon points="320,459 347,520 288,485"/>
+    <polygon points="267,467 280,512 235,480"/>
+    <polygon points="219,453 213,501 181,459"/>
 
-  <!-- Lion face (right half visible) -->
-  <ellipse cx="347" cy="256" rx="120" ry="133" fill="#f8f9fa"/>
+    <!-- Left side mane (showing on red) -->
+    <polygon points="173,427 147,480 155,413"/>
+    <polygon points="155,373 112,421 133,352"/>
+    <polygon points="139,315 85,347 120,280"/>
+    <polygon points="133,253 75,267 112,208"/>
+    <polygon points="139,200 80,192 128,147"/>
+    <polygon points="160,155 107,128 155,112"/>
+  </g>
 
-  <!-- Eye -->
-  <ellipse cx="387" cy="227" rx="21" ry="24" fill="#1a1a2e"/>
-  <circle cx="392" cy="222" r="5" fill="#ffffff"/>
+  <!-- Lion face base -->
+  <ellipse cx="307" cy="267" rx="112" ry="139" fill="#f8f9fa"/>
 
-  <!-- Nose -->
-  <ellipse cx="448" cy="267" rx="27" ry="21" fill="#e6a88a"/>
-  <ellipse cx="448" cy="262" rx="16" ry="11" fill="#1a1a2e"/>
+  <!-- Face details in line art style -->
+  <g fill="none" stroke="#1a1a2e" stroke-width="5" stroke-linecap="round">
+    <!-- Eye -->
+    <ellipse cx="347" cy="235" rx="27" ry="19"/>
+    <circle cx="352" cy="232" r="11" fill="#1a1a2e"/>
 
-  <!-- Mouth line -->
-  <path d="M448 288 Q448 315 427 320" stroke="#1a1a2e" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <!-- Brow line -->
+    <path d="M315 219 Q347 203 379 219"/>
+
+    <!-- Nose -->
+    <path d="M387 280 Q405 267 413,288 Q405 309 387 299 Q373 288 387 280" fill="#1a1a2e"/>
+
+    <!-- Mouth/muzzle lines -->
+    <path d="M387 299 L387 325"/>
+    <path d="M387 325 Q368 341 352 333"/>
+    <path d="M387 325 Q405 341 421 333"/>
+
+    <!-- Nose bridge -->
+    <path d="M360 253 Q379 245 395 261"/>
+
+    <!-- Cheek fur detail -->
+    <path d="M413 253 Q440 245 453 267"/>
+    <path d="M421 280 Q448 280 459 299"/>
+
+    <!-- Under eye detail -->
+    <path d="M320 253 Q341 261 360 253"/>
+  </g>
 
   <!-- Ear -->
-  <ellipse cx="373" cy="133" rx="32" ry="40" fill="#f8f9fa"/>
-  <ellipse cx="373" cy="139" rx="16" ry="21" fill="#e6a88a"/>
+  <path d="M293 147 Q280 107 307 93 Q341 101 333 147 Q320 133 293 147" fill="#f8f9fa" stroke="#1a1a2e" stroke-width="5"/>
+  <path d="M307 120 Q315 112 320 128" fill="none" stroke="#1a1a2e" stroke-width="4"/>
+
+  <!-- Inner mane detail lines -->
+  <g fill="none" stroke="#1a1a2e" stroke-width="3">
+    <path d="M200 173 Q227 200 240 240"/>
+    <path d="M213 213 Q240 235 253 267"/>
+    <path d="M208 267 Q235 280 253 307"/>
+    <path d="M219 320 Q245 325 267 360"/>
+    <path d="M240 373 Q267 373 293 400"/>
+  </g>
 </svg>
