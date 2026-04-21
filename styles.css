@@ -147,13 +147,13 @@ body {
     transition: --fill-angle 0.1s linear;
 }
 
-/* For rest periods - faded red, reverse direction */
+/* For rest periods - faded red, same direction but drains */
 .fill-overlay.resting {
     background: conic-gradient(
-        transparent 0deg,
-        transparent var(--fill-angle, 0deg),
+        rgba(230, 57, 70, 0.35) 0deg,
         rgba(230, 57, 70, 0.35) var(--fill-angle, 0deg),
-        rgba(230, 57, 70, 0.35) 360deg
+        transparent var(--fill-angle, 0deg),
+        transparent 360deg
     );
 }
 

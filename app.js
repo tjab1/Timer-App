@@ -245,7 +245,7 @@ class IntervalTimer {
         this.totalPhaseTime = duration;
         this.remainingTime = duration;
         this.updateTimeDisplay(duration);
-        this.updateFillAngle(0);
+        this.updateFillAngle(1); // Start full
 
         const startTime = Date.now();
 
@@ -256,7 +256,8 @@ class IntervalTimer {
             this.remainingTime = Math.max(0, this.totalPhaseTime - elapsed);
 
             this.updateTimeDisplay(this.remainingTime);
-            this.updateFillAngle(1 - (this.remainingTime / this.totalPhaseTime));
+            // Drain from full to empty (1 → 0)
+            this.updateFillAngle(this.remainingTime / this.totalPhaseTime);
 
             if (this.remainingTime <= 0) {
                 clearInterval(this.timerInterval);
