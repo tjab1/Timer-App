@@ -281,10 +281,16 @@ class IntervalTimer {
         const config = this.getLevelConfig(this.currentLevel);
         const phase = config.phases[this.currentPhase];
 
-        this.phaseInfo.textContent = `${phase.name}: Set ${this.currentSet + 1} of ${phase.sets}`;
+        this.phaseInfo.textContent = `${this.getPhaseLabel(config)}: Set ${this.currentSet + 1} of ${phase.sets}`;
         this.roundInfo.textContent = this.getRoundLabel(this.currentRound);
 
         this.runSet(phase.duration);
+    }
+
+    getPhaseLabel(config) {
+        const totalPhases = config.phases.length * this.totalRounds;
+        const globalPhase = (this.currentRound - 1) * config.phases.length + this.currentPhase + 1;
+        return `Phase ${globalPhase}/${totalPhases}`;
     }
 
     runSet(duration) {
@@ -389,10 +395,9 @@ class IntervalTimer {
             return;
         }
 
-        // Rest between sets
-        this.phaseInfo.textContent = `${phase.name}: Rest`;
+        // Rest between sets — keep showing the current Set label
         this.runRest(this.REST_BETWEEN_SETS, () => {
-            this.phaseInfo.textContent = `${phase.name}: Set ${this.currentSet + 1} of ${phase.sets}`;
+            this.phaseInfo.textContent = `${this.getPhaseLabel(config)}: Set ${this.currentSet + 1} of ${phase.sets}`;
             this.runSet(phase.duration);
         });
     }
