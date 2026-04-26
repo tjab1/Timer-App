@@ -11,6 +11,7 @@ class IntervalTimer {
         this.fillOverlay = document.getElementById('fill-overlay');
         this.phaseInfo = document.getElementById('phase-info');
         this.roundInfo = document.getElementById('round-info');
+        this.sessionRemainingEl = document.getElementById('session-remaining');
         this.startBtn = document.getElementById('start-btn');
         this.goAgainBtn = document.getElementById('go-again-btn');
         this.homeBtn = document.getElementById('home-btn');
@@ -28,6 +29,8 @@ class IntervalTimer {
         this.timerInterval = null;
         this.remainingTime = 0;
         this.totalPhaseTime = 0;
+        this.totalSessionTime = 0;
+        this.completedSegmentsTime = 0;
 
         // Constants
         this.REST_BETWEEN_SETS = 1.5; // seconds
@@ -156,8 +159,55 @@ class IntervalTimer {
                 `P${i + 1}: ${p.sets}×${p.duration}s`
             ).join(' | ');
             this.phaseInfo.textContent = phaseStrings;
-            this.roundInfo.textContent = `Round 1 of ${this.totalRounds}`;
+            this.roundInfo.textContent = this.getRoundLabel(1);
+            this.updateSessionRemaining(this.computeTotalSessionTime());
         }
+    }
+
+    getRoundLabel(round) {
+        return round === 1 ? 'Normal Kegel' : 'Reverse Kegel';
+    }
+
+    computeTotalSessionTime() {
+        const config = this.getLevelConfig(this.currentLevel);
+        let totalSets = 0;
+        let setTime = 0;
+        config.phases.forEach(p => {
+            totalSets += p.sets;
+            setTime += p.sets * p.duration;
+        });
+
+        const setsPerRound = totalSets;
+        const totalSetsAll = setsPerRound * this.totalRounds;
+        const totalSetTime = setTime * this.totalRounds;
+
+        // Rest after every set except the very last one
+        const totalRests = (totalSetsAll - 1) * this.REST_BETWEEN_SETS;
+
+        // Phase transitions: between phases within a round (phases - 1) per round
+        const phaseTransitions = (config.phases.length - 1) * this.totalRounds * this.TRANSITION_BETWEEN_PHASES;
+
+        // Round transitions: between rounds (rounds - 1)
+        const roundTransitions = (this.totalRounds - 1) * this.TRANSITION_BETWEEN_ROUNDS;
+
+        return totalSetTime + totalRests + phaseTransitions + roundTransitions;
+    }
+
+    formatTime(seconds) {
+        const total = Math.max(0, Math.ceil(seconds));
+        const mins = Math.floor(total / 60);
+        const secs = total % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    updateSessionRemaining(seconds) {
+        this.sessionRemainingEl.textContent = `${this.formatTime(seconds)} remaining`;
+    }
+
+    refreshSessionRemaining() {
+        const segmentElapsed = this.totalPhaseTime - this.remainingTime;
+        const remaining = this.totalSessionTime - this.completedSegmentsTime - segmentElapsed;
+        this.updateSessionRemaining(remaining);
     }
 
     setStatus(text, mode = 'normal') {
@@ -186,6 +236,9 @@ class IntervalTimer {
         this.currentRound = 1;
         this.currentPhase = 0;
         this.currentSet = 0;
+        this.totalSessionTime = this.computeTotalSessionTime();
+        this.completedSegmentsTime = 0;
+        this.updateSessionRemaining(this.totalSessionTime);
         this.startBtn.textContent = 'Pause';
         this.setLevelSelectEnabled(false);
         this.runPhase();
@@ -214,9 +267,11 @@ class IntervalTimer {
 
             this.updateTimeDisplay(this.remainingTime);
             this.updateFillAngle(1 - (this.remainingTime / this.totalPhaseTime));
+            this.refreshSessionRemaining();
 
             if (this.remainingTime <= 0) {
                 clearInterval(this.timerInterval);
+                this.completedSegmentsTime += this.totalPhaseTime;
                 this.onIntervalComplete();
             }
         }, 50);
@@ -227,7 +282,7 @@ class IntervalTimer {
         const phase = config.phases[this.currentPhase];
 
         this.phaseInfo.textContent = `${phase.name}: Set ${this.currentSet + 1} of ${phase.sets}`;
-        this.roundInfo.textContent = `Round ${this.currentRound} of ${this.totalRounds}`;
+        this.roundInfo.textContent = this.getRoundLabel(this.currentRound);
 
         this.runSet(phase.duration);
     }
@@ -260,9 +315,11 @@ class IntervalTimer {
             this.updateTimeDisplay(this.remainingTime);
             // Drain from full to empty (1 → 0)
             this.updateFillAngle(this.remainingTime / this.totalPhaseTime);
+            this.refreshSessionRemaining();
 
             if (this.remainingTime <= 0) {
                 clearInterval(this.timerInterval);
+                this.completedSegmentsTime += this.totalPhaseTime;
                 callback();
             }
         }, 50);
@@ -285,9 +342,11 @@ class IntervalTimer {
             this.remainingTime = Math.max(0, this.totalPhaseTime - elapsed);
 
             this.updateTimeDisplay(this.remainingTime);
+            this.refreshSessionRemaining();
 
             if (this.remainingTime <= 0) {
                 clearInterval(this.timerInterval);
+                this.completedSegmentsTime += this.totalPhaseTime;
                 callback();
             }
         }, 50);
@@ -381,10 +440,14 @@ class IntervalTimer {
         this.currentRound = 1;
         this.currentPhase = 0;
         this.currentSet = 0;
+        this.completedSegmentsTime = 0;
+        this.totalPhaseTime = 0;
+        this.remainingTime = 0;
         this.startBtn.textContent = 'Start';
         this.setStatus('Ready');
         this.updateTimeDisplay(0);
         this.updateFillAngle(0);
+        this.updateSessionRemaining(this.computeTotalSessionTime());
         this.setLevelSelectEnabled(true);
 
         if (this.timerInterval) {
