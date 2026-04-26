@@ -308,6 +308,188 @@ body {
     inherits: false;
 }
 
+/* Help Button */
+.help-btn {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: rgba(100, 255, 218, 0.08);
+    border: 1px solid rgba(100, 255, 218, 0.3);
+    border-radius: 50px;
+    color: #64ffda;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 100;
+    font-family: inherit;
+}
+
+.help-btn:hover {
+    background: rgba(100, 255, 218, 0.15);
+    border-color: #64ffda;
+    transform: translateY(-1px);
+}
+
+.help-btn svg {
+    flex-shrink: 0;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.modal-overlay.open {
+    opacity: 1;
+}
+
+.modal-overlay[hidden] {
+    display: none;
+}
+
+.modal {
+    background: linear-gradient(160deg, #1a1a2e 0%, #16213e 100%);
+    border: 1px solid rgba(100, 255, 218, 0.2);
+    border-radius: 20px;
+    padding: 28px 24px 24px;
+    width: 100%;
+    max-width: 520px;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    transform: scale(0.96);
+    transition: transform 0.2s ease;
+}
+
+.modal-overlay.open .modal {
+    transform: scale(1);
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    background: transparent;
+    border: none;
+    color: #8892b0;
+    font-size: 1.8rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.modal-close:hover {
+    color: #64ffda;
+    background: rgba(100, 255, 218, 0.1);
+}
+
+.modal-title {
+    font-size: 1.4rem;
+    color: #64ffda;
+    margin-bottom: 20px;
+    padding-right: 30px;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.15);
+    flex-wrap: wrap;
+}
+
+.tab {
+    background: transparent;
+    border: none;
+    color: #8892b0;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px 8px 0 0;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.tab:hover {
+    color: #64ffda;
+}
+
+.tab.active {
+    color: #64ffda;
+    border-bottom-color: #64ffda;
+    background: rgba(100, 255, 218, 0.06);
+}
+
+.tab-content {
+    display: none;
+    color: #c5cae0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-content h3 {
+    color: #64ffda;
+    font-size: 1rem;
+    margin-top: 18px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.tab-content h3:first-child {
+    margin-top: 0;
+}
+
+.tab-content p {
+    margin-bottom: 10px;
+}
+
+.tab-content strong {
+    color: #ffffff;
+}
+
+.tab-content em {
+    color: #a8b2d1;
+}
+
+.tab-content ol,
+.tab-content ul {
+    padding-left: 22px;
+    margin-bottom: 10px;
+}
+
+.tab-content li {
+    margin-bottom: 8px;
+}
+
 /* Responsive */
 @media (max-width: 400px) {
     .stopwatch {
@@ -322,5 +504,27 @@ body {
     .level-dropdown {
         font-size: 2rem;
         padding: 6px 30px 6px 12px;
+    }
+
+    .help-btn span {
+        display: none;
+    }
+
+    .help-btn {
+        padding: 8px;
+    }
+
+    .modal {
+        padding: 24px 18px 20px;
+        max-height: 90vh;
+    }
+
+    .modal-title {
+        font-size: 1.2rem;
+    }
+
+    .tab {
+        padding: 8px 10px;
+        font-size: 0.78rem;
     }
 }

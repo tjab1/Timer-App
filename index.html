@@ -13,6 +13,81 @@
     <link rel="apple-touch-icon" href="icons/icon-192.png">
 </head>
 <body>
+    <button id="help-btn" class="help-btn" aria-label="How to Kegel">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 1-1 1.7"></path>
+            <line x1="12" y1="17" x2="12" y2="17.01"></line>
+        </svg>
+        <span>How to Kegel</span>
+    </button>
+
+    <div id="help-modal" class="modal-overlay" hidden>
+        <div class="modal" role="dialog" aria-labelledby="help-title" aria-modal="true">
+            <button id="modal-close" class="modal-close" aria-label="Close">&times;</button>
+            <h2 id="help-title" class="modal-title">How to Kegel</h2>
+
+            <div class="tabs" role="tablist">
+                <button class="tab active" data-tab="why" role="tab">Why Kegel?</button>
+                <button class="tab" data-tab="regular" role="tab">Regular Kegel</button>
+                <button class="tab" data-tab="reverse" role="tab">Reverse Kegel</button>
+            </div>
+
+            <div class="tab-content active" data-panel="why">
+                <h3>Why train both?</h3>
+                <p>Kegels strengthen your pelvic floor — the hammock of muscle that controls ejaculation. But strength alone isn't the goal. <strong>Control in both directions</strong> is.</p>
+
+                <h3>How it connects to lasting longer</h3>
+                <p>When you get aroused, your pelvic floor unconsciously tightens. The closer you get to orgasm, the more it clenches — until the involuntary contractions of ejaculation fire. Most guys just feel "the point of no return" approaching without realizing this is the mechanism.</p>
+                <p>A <strong>reverse kegel</strong> is your brake pedal. Doing one mid-sex actively undoes that buildup, dropping you back down the arousal ladder and buying more time.</p>
+                <p>This is also why training <em>only</em> regular kegels often makes guys worse — a tighter pelvic floor sits closer to the trigger by default. Regular kegels build awareness and strength; reverse kegels are what you actually deploy in the moment.</p>
+
+                <h3>The bottom line</h3>
+                <ul>
+                    <li><strong>Regular kegels</strong> → build strength + awareness of the muscle</li>
+                    <li><strong>Reverse kegels</strong> → the brake you use during sex</li>
+                    <li><strong>Full release</strong> between reps matters as much as the squeeze</li>
+                </ul>
+            </div>
+
+            <div class="tab-content" data-panel="regular">
+                <h3>The squeeze</h3>
+                <p>That feeling when you're mid-pee and clamp down to <strong>stop the stream</strong> — that's a kegel. Same muscle you'd use to hold in a fart. You're lifting and squeezing the pelvic floor <em>up and in</em>.</p>
+
+                <h3>How to find it</h3>
+                <p>Next time you pee, cut the stream off mid-flow. The muscle that did that is your PC muscle. Use this once just to locate it — don't make a habit of training while peeing.</p>
+
+                <h3>How to do it</h3>
+                <ol>
+                    <li>Squeeze and lift up and in, hold 3 seconds.</li>
+                    <li>Fully release for 3 seconds — make the release as complete as the squeeze.</li>
+                    <li>Repeat 10 times.</li>
+                </ol>
+                <p>Keep your abs, glutes, and jaw relaxed. Only the pelvic floor should be working. A complete release between reps is the part most people skip and the part that matters most.</p>
+            </div>
+
+            <div class="tab-content" data-panel="reverse">
+                <h3>The opposite of a regular kegel</h3>
+                <p>A reverse kegel is the <strong>exact opposite of a regular kegel</strong>. Where a kegel lifts your pelvic floor <em>up and in</em>, a reverse kegel drops it <em>down and out</em> — you're actively lengthening and bulging the muscle outward. Same muscle, opposite direction.</p>
+                <p>It's the harder one to learn because your body already knows how to clench, but has almost no practice consciously lengthening on command. Expect 1–2 weeks of daily practice before it clicks. Early attempts feeling like nothing is happening is normal.</p>
+
+                <h3>The best way to find it: get naked and feel it with your hand</h3>
+                <p>You need physical feedback, not guesswork.</p>
+                <ol>
+                    <li><strong>Get naked and sit on a hard surface</strong> — wooden chair, edge of the tub, or the floor. Soft couches won't work.</li>
+                    <li><strong>Slide your hand under you, palm up</strong>, with your perineum (skin between balls and asshole) resting directly on your fingers.</li>
+                    <li><strong>Do a regular kegel first.</strong> You'll feel your perineum lift up and away from your fingers. Do it 3–4 times to lock in the baseline.</li>
+                    <li><strong>Now reverse it.</strong> Make your perineum press down into your fingers and bulge outward — as if that patch of skin is swelling toward the floor. Your fingers should feel a soft, distinct pressure pushing into them.</li>
+                    <li><strong>Keep it gentle — 10–20% effort.</strong> Belly soft, glutes relaxed, jaw loose. If you're straining or holding your breath, back off.</li>
+                    <li><strong>Try it on a slow inhale.</strong> The pelvic floor naturally drops as you breathe in — ride that drop and amplify it slightly. Many guys feel it for the first time this way.</li>
+                </ol>
+
+                <h3>What "got it" feels like</h3>
+                <p>A distinct <strong>downward and outward pressure</strong> in your perineum, with everything else completely soft. A weirdly satisfying "letting go" sensation — like releasing a clenched fist you didn't know you were making. Your balls may sag a little lower; your anus feels like it's softly opening rather than puckering. Once your hand confirms it once, your brain locks onto the pattern and you can find it again without needing to feel for it.</p>
+            </div>
+        </div>
+    </div>
+
     <div class="app-container">
         <!-- Home Screen -->
         <div id="home-screen" class="screen active">
@@ -74,6 +149,41 @@
         </div>
     </div>
 
+    <script>
+        (function() {
+            const helpBtn = document.getElementById('help-btn');
+            const modal = document.getElementById('help-modal');
+            const closeBtn = document.getElementById('modal-close');
+            const tabs = modal.querySelectorAll('.tab');
+            const panels = modal.querySelectorAll('.tab-content');
+
+            function openModal() {
+                modal.hidden = false;
+                requestAnimationFrame(() => modal.classList.add('open'));
+            }
+            function closeModal() {
+                modal.classList.remove('open');
+                setTimeout(() => { modal.hidden = true; }, 200);
+            }
+
+            helpBtn.addEventListener('click', openModal);
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && !modal.hidden) closeModal();
+            });
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.dataset.tab;
+                    tabs.forEach(t => t.classList.toggle('active', t === tab));
+                    panels.forEach(p => p.classList.toggle('active', p.dataset.panel === target));
+                });
+            });
+        })();
+    </script>
     <script src="app.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
